@@ -1,4 +1,3 @@
-
 use std::{env::current_dir, fs::read_to_string, path::PathBuf};
 
 pub fn get_calories_file() -> PathBuf {
@@ -25,4 +24,8 @@ pub fn calculate_calories() -> Vec<i32> {
 
 pub fn get_largest_value(values: Vec<i32>) -> i32 {
     values.into_iter().max().unwrap_or(0)
+}
+
+pub fn exec() {
+    println!("{}", get_largest_value(calculate_calories()));
 }

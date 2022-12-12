@@ -1,5 +1,7 @@
 mod one;
+mod two;
 
 fn main() {
-    // println!("{}", one::get_largest_value(one::calculate_calories()));
+    // one::exec();
+    two::exec();
 }
