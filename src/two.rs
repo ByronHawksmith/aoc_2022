@@ -1,6 +1,5 @@
 use std::{collections::HashMap, env::current_dir, path::PathBuf};
 
-// Declare a type Move that contains Rock -> 1, Paper -> 2, Scissors -> 3
 #[derive(Copy, Clone, PartialEq)]
 pub enum Move {
     Rock,
@@ -8,7 +7,6 @@ pub enum Move {
     Scissors,
 }
 
-// Implement a default for Move
 impl Default for Move {
     fn default() -> Self {
         Move::Rock
@@ -22,13 +20,11 @@ pub enum Outcome {
     Draw,
 }
 
-// Declare a struct which contains an outcome value and a move value
 pub struct MatchResult {
     move_value: i32,
     outcome_value: i32,
 }
 
-// Declare a function that takes a Move and returns a move value
 pub fn get_move_value(m: Move) -> i32 {
     match m {
         Move::Rock => 1,
@@ -37,7 +33,6 @@ pub fn get_move_value(m: Move) -> i32 {
     }
 }
 
-// Declare a function that takes an Outcome and returns an outcome value
 pub fn get_outcome_value(o: Outcome) -> i32 {
     match o {
         Outcome::Lose => 0,
@@ -46,7 +41,6 @@ pub fn get_outcome_value(o: Outcome) -> i32 {
     }
 }
 
-// Declare a map of three values, A -> Rock, B -> Paper, C -> Scissors
 pub fn get_strategy_map() -> HashMap<String, Move> {
     let mut map = HashMap::new();
     map.insert("A".to_string(), Move::Rock);
@@ -58,12 +52,10 @@ pub fn get_strategy_map() -> HashMap<String, Move> {
     map
 }
 
-// Declare a function that gets the strategy.txt file
 pub fn get_strategy_file() -> PathBuf {
     current_dir().unwrap().join("strategy.txt")
 }
 
-// Declare a function that creates a match result from two integers
 pub fn create_match_result(move_value: i32, outcome_value: i32) -> MatchResult {
     MatchResult {
         move_value,
@@ -85,7 +77,6 @@ pub fn determine_winner(player1_move: Move, player2_move: Move) -> Outcome {
     }
 }
 
-// Declare a function that determines the match result
 pub fn determine_match_result(player1_move: Move, player2_move: Move) -> MatchResult {
     let player1_move_value = get_move_value(player1_move);
     let player1_outcome_value = get_outcome_value(determine_winner(player1_move, player2_move));
@@ -93,7 +84,6 @@ pub fn determine_match_result(player1_move: Move, player2_move: Move) -> MatchRe
     create_match_result(player1_move_value, player1_outcome_value)
 }
 
-// Declare a function that reads the strategy.txt file and calculates value of each move for each player for each line and get the outcome of the match
 pub fn calculate_match_results() -> Vec<MatchResult> {
     let contents = std::fs::read_to_string(get_strategy_file())
         .expect("Something went wrong reading the file");
@@ -122,7 +112,6 @@ pub fn calculate_match_results() -> Vec<MatchResult> {
     match_results
 }
 
-// Declare a function that calculates the total score based on the match results
 pub fn calculate_total_score(match_results: Vec<MatchResult>) -> i32 {
     let mut total_score = 0;
 
