@@ -20,7 +20,6 @@ fn get_crates() -> (Vec<String>, usize) {
     (crates, index)
 }
 
-// Declare a function that checks if the left number is bigger than the right number, if it is, return the right number
 fn get_smallest_number(left: usize, right: usize) -> usize {
     if left > right {
         right
@@ -29,7 +28,6 @@ fn get_smallest_number(left: usize, right: usize) -> usize {
     }
 }
 
-// Declare a function that partitions a string that is 35 characters long into 9 lots of 4 characters
 fn partition_string(s: &str) -> Vec<String> {
     let mut partitions = Vec::new();
     let mut start = 0;
@@ -43,7 +41,6 @@ fn partition_string(s: &str) -> Vec<String> {
     partitions
 }
 
-// Declare a function that uses the partition_string function to partition each line from the get_crates function
 fn get_partitions() -> Vec<Vec<String>> {
     let (crates, _) = get_crates();
     let mut partitions = Vec::new();
@@ -54,7 +51,6 @@ fn get_partitions() -> Vec<Vec<String>> {
     partitions
 }
 
-// Declare a function that reads from the crates file starting at a particular index and returns a vector of strings
 fn get_moves(index: usize) -> Vec<String> {
     let file = get_crates_file();
     let contents = std::fs::read_to_string(file).unwrap();
@@ -66,7 +62,6 @@ fn get_moves(index: usize) -> Vec<String> {
     moves
 }
 
-// Declare a function that prints out the partitions
 fn print_partitions() {
     let partitions = get_partitions();
 
