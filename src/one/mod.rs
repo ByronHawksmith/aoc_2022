@@ -1,10 +1,10 @@
 use std::{env::current_dir, fs::read_to_string, path::PathBuf};
 
-pub fn get_calories_file() -> PathBuf {
-    current_dir().unwrap().join("calories.txt")
+fn get_calories_file() -> PathBuf {
+    current_dir().unwrap().join("src/one/calories.txt")
 }
 
-pub fn calculate_calories() -> Vec<i32> {
+fn calculate_calories() -> Vec<i32> {
     let contents =
         read_to_string(get_calories_file()).expect("Something went wrong reading the file");
     let mut sum = 0;
@@ -22,7 +22,7 @@ pub fn calculate_calories() -> Vec<i32> {
     sums
 }
 
-pub fn get_largest_value(values: Vec<i32>) -> i32 {
+fn get_largest_value(values: Vec<i32>) -> i32 {
     values.into_iter().max().unwrap_or(0)
 }
 

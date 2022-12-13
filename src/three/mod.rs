@@ -29,7 +29,7 @@ fn find_single_common_letter((first, second): (String, String)) -> char {
 }
 
 fn get_rucksacks_file() -> PathBuf {
-    current_dir().unwrap().join("three.txt")
+    current_dir().unwrap().join("src/three/rucksacks.txt")
 }
 
 fn get_priorities() -> Vec<i32> {
@@ -54,5 +54,5 @@ fn sum_priorities(priorities: Vec<i32>) -> i32 {
 pub fn exec() {
     let priorities = get_priorities();
     let sum = sum_priorities(priorities);
-    println!("Sum of priorities: {}", sum);
+    println!("{}", sum);
 }

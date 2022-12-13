@@ -3,7 +3,7 @@ mod three;
 mod two;
 
 fn main() {
-    // one::exec();
-    // two::exec();
+    one::exec();
+    two::exec();
     three::exec();
 }

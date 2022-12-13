@@ -1,7 +1,7 @@
 use std::{collections::HashMap, env::current_dir, path::PathBuf};
 
 #[derive(Copy, Clone, PartialEq)]
-pub enum Move {
+enum Move {
     Rock,
     Paper,
     Scissors,
@@ -14,18 +14,18 @@ impl Default for Move {
 }
 
 #[derive(Copy, Clone)]
-pub enum Outcome {
+enum Outcome {
     Win,
     Lose,
     Draw,
 }
 
-pub struct MatchResult {
+struct MatchResult {
     move_value: i32,
     outcome_value: i32,
 }
 
-pub fn get_move_value(m: Move) -> i32 {
+fn get_move_value(m: Move) -> i32 {
     match m {
         Move::Rock => 1,
         Move::Paper => 2,
@@ -33,7 +33,7 @@ pub fn get_move_value(m: Move) -> i32 {
     }
 }
 
-pub fn get_outcome_value(o: Outcome) -> i32 {
+fn get_outcome_value(o: Outcome) -> i32 {
     match o {
         Outcome::Lose => 0,
         Outcome::Draw => 3,
@@ -41,7 +41,7 @@ pub fn get_outcome_value(o: Outcome) -> i32 {
     }
 }
 
-pub fn get_strategy_map() -> HashMap<String, Move> {
+fn get_strategy_map() -> HashMap<String, Move> {
     let mut map = HashMap::new();
     map.insert("A".to_string(), Move::Rock);
     map.insert("B".to_string(), Move::Paper);
@@ -52,18 +52,18 @@ pub fn get_strategy_map() -> HashMap<String, Move> {
     map
 }
 
-pub fn get_strategy_file() -> PathBuf {
-    current_dir().unwrap().join("strategy.txt")
+fn get_strategy_file() -> PathBuf {
+    current_dir().unwrap().join("src/two/strategy.txt")
 }
 
-pub fn create_match_result(move_value: i32, outcome_value: i32) -> MatchResult {
+fn create_match_result(move_value: i32, outcome_value: i32) -> MatchResult {
     MatchResult {
         move_value,
         outcome_value,
     }
 }
 
-pub fn determine_winner(player1_move: Move, player2_move: Move) -> Outcome {
+fn determine_winner(player1_move: Move, player2_move: Move) -> Outcome {
     if matches!(player1_move, Move::Rock) && matches!(player2_move, Move::Scissors) {
         Outcome::Win
     } else if matches!(player1_move, Move::Paper) && matches!(player2_move, Move::Rock) {
@@ -77,14 +77,14 @@ pub fn determine_winner(player1_move: Move, player2_move: Move) -> Outcome {
     }
 }
 
-pub fn determine_match_result(player1_move: Move, player2_move: Move) -> MatchResult {
+fn determine_match_result(player1_move: Move, player2_move: Move) -> MatchResult {
     let player1_move_value = get_move_value(player1_move);
     let player1_outcome_value = get_outcome_value(determine_winner(player1_move, player2_move));
 
     create_match_result(player1_move_value, player1_outcome_value)
 }
 
-pub fn calculate_match_results() -> Vec<MatchResult> {
+fn calculate_match_results() -> Vec<MatchResult> {
     let contents = std::fs::read_to_string(get_strategy_file())
         .expect("Something went wrong reading the file");
     let mut match_results = Vec::new();
@@ -112,7 +112,7 @@ pub fn calculate_match_results() -> Vec<MatchResult> {
     match_results
 }
 
-pub fn calculate_total_score(match_results: Vec<MatchResult>) -> i32 {
+fn calculate_total_score(match_results: Vec<MatchResult>) -> i32 {
     let mut total_score = 0;
 
     for match_result in match_results {
