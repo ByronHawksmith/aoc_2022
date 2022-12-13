@@ -20,6 +20,15 @@ fn get_crates() -> (Vec<String>, usize) {
     (crates, index)
 }
 
+// Declare a function that checks if the left number is bigger than the right number, if it is, return the right number
+fn get_smallest_number(left: usize, right: usize) -> usize {
+    if left > right {
+        right
+    } else {
+        left
+    }
+}
+
 // Declare a function that partitions a string that is 35 characters long into 9 lots of 4 characters
 fn partition_string(s: &str) -> Vec<String> {
     let mut partitions = Vec::new();
@@ -29,7 +38,7 @@ fn partition_string(s: &str) -> Vec<String> {
     for _ in 0..9 {
         partitions.push(s[start..end].to_string());
         start += 4;
-        end += if end + 4 > s.len() { 3 } else { 4 };
+        end = get_smallest_number(end + 4, s.len());
     }
     partitions
 }
