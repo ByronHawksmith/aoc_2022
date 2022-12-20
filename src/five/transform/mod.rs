@@ -1,4 +1,8 @@
-use super::{file::get_crates, utils::get_smallest_number};
+use super::{
+    contracts::Move,
+    file::{get_crates_str, get_moves_str},
+    utils::get_smallest_number,
+};
 
 fn partition_crates(s: &str) -> Vec<String> {
     let mut partitions = Vec::new();
@@ -14,24 +18,42 @@ fn partition_crates(s: &str) -> Vec<String> {
 }
 
 fn get_horizontal_crate_slices() -> Vec<Vec<String>> {
-    let crates = get_crates();
-    let mut partitions = Vec::new();
+    let crates = get_crates_str();
+    let mut horizontal_slices = Vec::new();
 
     for crate_ in crates {
-        partitions.push(partition_crates(&crate_));
+        horizontal_slices.push(partition_crates(&crate_));
     }
-    partitions
+    horizontal_slices
 }
 
-pub fn get_vertical_crate_stacks() -> Vec<Vec<String>> {
+pub fn get_crate_stacks() -> Vec<Vec<String>> {
     let mut stacks = Vec::new();
 
     for i in 0..9 {
         let mut stack = Vec::new();
-        for partition in get_horizontal_crate_slices() {
-            stack.push(partition[i].to_string());
+        for horizontal_slice in get_horizontal_crate_slices() {
+            stack.push(horizontal_slice[i].trim().to_string());
         }
         stacks.push(stack);
     }
     stacks
+}
+
+pub fn get_moves() -> Vec<Move> {
+    let moves = get_moves_str();
+    let mut move_structs = Vec::new();
+
+    for move_ in moves {
+        let mut split = move_.split_whitespace();
+        let number = split.nth(1).unwrap().parse::<u32>().unwrap();
+        let source = split.nth(1).unwrap().parse::<u32>().unwrap();
+        let destination = split.nth(1).unwrap().parse::<u32>().unwrap();
+        move_structs.push(Move {
+            number,
+            source,
+            destination,
+        });
+    }
+    move_structs
 }

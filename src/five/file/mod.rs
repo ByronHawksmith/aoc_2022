@@ -18,7 +18,7 @@ pub fn get_moves_index() -> usize {
     index
 }
 
-pub fn get_crates() -> Vec<String> {
+pub fn get_crates_str() -> Vec<String> {
     let file = get_crates_file();
     let contents = std::fs::read_to_string(file).unwrap();
     let mut crates = Vec::new();
@@ -32,7 +32,7 @@ pub fn get_crates() -> Vec<String> {
     crates
 }
 
-pub fn get_moves() -> Vec<String> {
+pub fn get_moves_str() -> Vec<String> {
     let file = get_crates_file();
     let contents = std::fs::read_to_string(file).unwrap();
     let mut moves = Vec::new();
