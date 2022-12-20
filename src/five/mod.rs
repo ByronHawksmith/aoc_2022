@@ -86,7 +86,18 @@ fn print_stacks() {
     }
 }
 
+fn print_moves() {
+    let moves = get_moves(get_crates().1);
+
+    for move_ in moves {
+        println!("{}", move_);
+    }
+}
+
 pub fn exec() {
     print_partitions();
+    println!("");
     print_stacks();
+    println!("");
+    print_moves();
 }
