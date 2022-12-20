@@ -1,102 +1,35 @@
+mod contracts;
+mod file;
+mod print;
+mod transform;
 mod utils;
 
-use std::{env::current_dir, path::PathBuf};
+use self::{
+    contracts::Move,
+    file::get_moves,
+    print::{print_moves, print_stacks},
+};
 
-fn get_crates_file() -> PathBuf {
-    current_dir().unwrap().join("src/five/crates.txt")
-}
-
-fn get_crates() -> (Vec<String>, usize) {
-    let file = get_crates_file();
-    let contents = std::fs::read_to_string(file).unwrap();
-    let mut crates = Vec::new();
-    let mut index = 0;
-
-    for (i, line) in contents.lines().enumerate() {
-        if line.is_empty() {
-            index = i;
-            break;
-        }
-        crates.push(line.to_string());
-    }
-    (crates, index)
-}
-
-fn partition_crates(s: &str) -> Vec<String> {
-    let mut partitions = Vec::new();
-    let mut start = 0;
-    let mut end = 4;
-
-    for _ in 0..9 {
-        partitions.push(s[start..end].to_string());
-        start += 4;
-        end = utils::get_smallest_number(end + 4, s.len());
-    }
-    partitions
-}
-
-fn get_crate_partitions() -> Vec<Vec<String>> {
-    let (crates, _) = get_crates();
-    let mut partitions = Vec::new();
-
-    for crate_ in crates {
-        partitions.push(partition_crates(&crate_));
-    }
-    partitions
-}
-
-fn get_crate_stacks(crate_partitions: &Vec<Vec<String>>) -> Vec<Vec<String>> {
-    let mut stacks = Vec::new();
-
-    for i in 0..9 {
-        let mut stack = Vec::new();
-        for partition in crate_partitions {
-            stack.push(partition[i].to_string());
-        }
-        stacks.push(stack);
-    }
-
-    stacks
-}
-
-fn get_moves(index: usize) -> Vec<String> {
-    let file = get_crates_file();
-    let contents = std::fs::read_to_string(file).unwrap();
-    let mut moves = Vec::new();
-
-    for line in contents.lines().skip(index + 1) {
-        moves.push(line.to_string());
-    }
-    moves
-}
-
-fn print_partitions() {
-    let partitions = get_crate_partitions();
-
-    for partition in partitions {
-        println!("{:?}", partition);
-    }
-}
-
-fn print_stacks() {
-    let stacks = get_crate_stacks(&get_crate_partitions());
-
-    for stack in stacks {
-        println!("{:?}", stack);
-    }
-}
-
-fn print_moves() {
-    let moves = get_moves(get_crates().1);
+// Call get_moves and parse each line into a Move struct, the structure of a move line is: move 1 from 2 to 1
+fn parse_moves() -> Vec<Move> {
+    let moves = get_moves();
+    let mut move_structs = Vec::new();
 
     for move_ in moves {
-        println!("{}", move_);
+        let mut split = move_.split_whitespace();
+        let number = split.nth(1).unwrap().parse::<u32>().unwrap();
+        let source = split.nth(1).unwrap().parse::<u32>().unwrap();
+        let destination = split.nth(1).unwrap().parse::<u32>().unwrap();
+        move_structs.push(Move {
+            number,
+            source,
+            destination,
+        });
     }
+    move_structs
 }
 
 pub fn exec() {
-    print_partitions();
-    println!("");
     print_stacks();
     println!("");
     print_moves();
