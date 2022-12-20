@@ -4,7 +4,7 @@ use super::{
     utils::get_smallest_number,
 };
 
-fn partition_crates(s: &str) -> Vec<String> {
+fn partition_horizontal_slice(s: &str) -> Vec<String> {
     let mut partitions = Vec::new();
     let mut start = 0;
     let mut end = 4;
@@ -18,11 +18,11 @@ fn partition_crates(s: &str) -> Vec<String> {
 }
 
 fn get_horizontal_crate_slices() -> Vec<Vec<String>> {
-    let crates = get_crates_str();
+    let crates_str = get_crates_str();
     let mut horizontal_slices = Vec::new();
 
-    for crate_ in crates {
-        horizontal_slices.push(partition_crates(&crate_));
+    for horizontal_slice in crates_str {
+        horizontal_slices.push(partition_horizontal_slice(&horizontal_slice));
     }
     horizontal_slices
 }
